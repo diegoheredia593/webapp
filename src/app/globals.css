@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-paper text-ink;
+  }
+  body {
+    @apply antialiased;
+  }
+  ::selection {
+    @apply bg-ink text-paper;
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    animation: fadeIn 0.35s ease-out both;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
