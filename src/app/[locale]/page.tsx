@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { withTerms } from "@/components/glossary/withTerms";
 import { LeadForm } from "@/components/LeadForm";
+import { PlansSpotlight } from "@/components/PlansSpotlight";
 import { AvatarPlaceholder, HeroFigure, QrPlaceholder } from "@/components/Placeholders";
 import { StoreButtons } from "@/components/StoreButtons";
 import { getDictionary, isLocale, locales } from "@/content/dictionary";
@@ -120,35 +121,37 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className="lead">{dict.pricing.lead}</p>
           </div>
 
-          <div className="plans">
-            {dict.pricing.plans.map((plan) => {
-              const featured = plan.name === FEATURED_PLAN;
-              return (
-                <div key={plan.name} className={`plan${featured ? " plan--featured" : ""}`}>
-                  <span className="tag tag--strong">
-                    {plan.name}
-                    {featured ? ` · ${dict.pricing.popular}` : ""}
-                  </span>
-                  <div className="plan__price">{plan.price}</div>
-                  <p className="body-s">{plan.pitch}</p>
-                  <ul>
-                    {plan.items.map((item) => (
-                      <li key={item}>
-                        <span>{withTerms(item)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {/* Solo el plan destacado lleva la acción en óxido */}
-                  <Link
-                    href={href(locale, "/#descargar")}
-                    className={`btn btn--block ${featured ? "btn--primary" : "btn--ghost"}`}
-                  >
-                    {plan.cta}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
+          <PlansSpotlight>
+            <div className="plans">
+              {dict.pricing.plans.map((plan) => {
+                const featured = plan.name === FEATURED_PLAN;
+                return (
+                  <div key={plan.name} className={`plan${featured ? " plan--featured" : ""}`}>
+                    <span className="tag tag--strong">
+                      {plan.name}
+                      {featured ? ` · ${dict.pricing.popular}` : ""}
+                    </span>
+                    <div className="plan__price">{plan.price}</div>
+                    <p className="body-s">{plan.pitch}</p>
+                    <ul>
+                      {plan.items.map((item) => (
+                        <li key={item}>
+                          <span>{withTerms(item)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {/* Solo el plan destacado lleva la acción en óxido */}
+                    <Link
+                      href={href(locale, "/#descargar")}
+                      className={`btn btn--block ${featured ? "btn--primary" : "btn--ghost"}`}
+                    >
+                      {plan.cta}
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </PlansSpotlight>
 
           <p className="caption" style={{ marginTop: "var(--s-24)" }}>
             {dict.pricing.feesNote}{" "}
